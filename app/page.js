@@ -2,6 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import BookmarkCard from '@/components/BookmarkCard';
+import BookmarkIcon from '@/components/BookmarkIcon';
+import BookmarkList from '@/components/BookmarkList';
+import ViewModeSelector from '@/components/ViewModeSelector';
 import CategoryFilter from '@/components/CategoryFilter';
 import SearchBar from '@/components/SearchBar';
 import Link from 'next/link';
@@ -14,6 +17,20 @@ export default function Home() {
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(true);
   const [showMobileCategories, setShowMobileCategories] = useState(false);
+  
+  // État pour le mode d'affichage
+  const [viewMode, setViewMode] = useState(() => {
+    // Vérifier d'abord localStorage
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('bookmarkViewMode');
+      if (saved) return saved;
+    }
+    // Sinon, utiliser les valeurs par défaut selon l'appareil
+    if (typeof window !== 'undefined' && window.innerWidth < 768) {
+      return 'icons'; // Mobile par défaut
+    }
+    return 'cards'; // Desktop par défaut
+  });
 
   useEffect(() => {
     fetchBookmarks();
@@ -79,6 +96,11 @@ export default function Home() {
     setShowMobileCategories(false);
   };
 
+  const handleViewModeChange = (mode) => {
+    setViewMode(mode);
+    localStorage.setItem('bookmarkViewMode', mode);
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -134,7 +156,8 @@ export default function Home() {
             </div>
             
             {/* Colonne droite - largeur fixe */}
-            <div className="w-64 text-right">
+            <div className="w-64 flex items-center justify-end gap-4">
+              <ViewModeSelector viewMode={viewMode} onChange={handleViewModeChange} />
               <Link
                 href="/admin"
                 className="text-sm text-blue-600 hover:text-blue-800 transition-colors"
@@ -179,33 +202,36 @@ export default function Home() {
       <div className="md:hidden bg-white shadow-md sticky top-0 z-10">
         <div className="px-4 py-4">
           {/* Titre stylisé mobile */}
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              viewBox="0 0 32 32"
-              className="w-8 h-8"
-            >
-              <defs>
-                <linearGradient id="globeGradientMobile" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" style={{stopColor:'#3b82f6',stopOpacity:1}} />
-                  <stop offset="100%" style={{stopColor:'#1e40af',stopOpacity:1}} />
-                </linearGradient>
-              </defs>
-              <circle cx="16" cy="16" r="14" fill="url(#globeGradientMobile)" opacity="0.1"/>
-              <circle cx="16" cy="16" r="14" fill="none" stroke="url(#globeGradientMobile)" strokeWidth="2"/>
-              <ellipse cx="16" cy="16" rx="6" ry="14" fill="none" stroke="#60a5fa" strokeWidth="1.5" opacity="0.8"/>
-              <ellipse cx="16" cy="16" rx="11" ry="14" fill="none" stroke="#3b82f6" strokeWidth="1" opacity="0.6"/>
-              <ellipse cx="16" cy="16" rx="14" ry="5" fill="none" stroke="#60a5fa" strokeWidth="1.5" opacity="0.8"/>
-              <line x1="2" y1="16" x2="30" y2="16" stroke="#2563eb" strokeWidth="1.5" opacity="0.9"/>
-              <ellipse cx="16" cy="16" rx="12" ry="10" fill="none" stroke="#3b82f6" strokeWidth="1" opacity="0.6"/>
-            </svg>
-            <div>
-              <h1 className="text-2xl font-black bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent">
-                favoris
-                <span className="text-gray-700 font-bold">.pro</span>
-              </h1>
-              <p className="text-xs text-gray-500 text-center -mt-1">Paris sportifs</p>
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2">
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                viewBox="0 0 32 32"
+                className="w-8 h-8"
+              >
+                <defs>
+                  <linearGradient id="globeGradientMobile" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style={{stopColor:'#3b82f6',stopOpacity:1}} />
+                    <stop offset="100%" style={{stopColor:'#1e40af',stopOpacity:1}} />
+                  </linearGradient>
+                </defs>
+                <circle cx="16" cy="16" r="14" fill="url(#globeGradientMobile)" opacity="0.1"/>
+                <circle cx="16" cy="16" r="14" fill="none" stroke="url(#globeGradientMobile)" strokeWidth="2"/>
+                <ellipse cx="16" cy="16" rx="6" ry="14" fill="none" stroke="#60a5fa" strokeWidth="1.5" opacity="0.8"/>
+                <ellipse cx="16" cy="16" rx="11" ry="14" fill="none" stroke="#3b82f6" strokeWidth="1" opacity="0.6"/>
+                <ellipse cx="16" cy="16" rx="14" ry="5" fill="none" stroke="#60a5fa" strokeWidth="1.5" opacity="0.8"/>
+                <line x1="2" y1="16" x2="30" y2="16" stroke="#2563eb" strokeWidth="1.5" opacity="0.9"/>
+                <ellipse cx="16" cy="16" rx="12" ry="10" fill="none" stroke="#3b82f6" strokeWidth="1" opacity="0.6"/>
+              </svg>
+              <div>
+                <h1 className="text-2xl font-black bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent">
+                  favoris
+                  <span className="text-gray-700 font-bold">.pro</span>
+                </h1>
+                <p className="text-xs text-gray-500 text-center -mt-1">Paris sportifs</p>
+              </div>
             </div>
+            <ViewModeSelector viewMode={viewMode} onChange={handleViewModeChange} />
           </div>
 
           {/* Menu déroulant pour mobile */}
@@ -267,15 +293,43 @@ export default function Home() {
         {orderedCategories.map((category) => (
           <div key={category} className="mb-8">
             <h2 className="text-2xl font-semibold mb-4 text-gray-800">{category}</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {groupedBookmarks[category].map((bookmark) => (
-                <BookmarkCard 
-                  key={bookmark.id} 
-                  bookmark={bookmark}
-                  isAdmin={false}
-                />
-              ))}
-            </div>
+            
+            {/* Vue Cartes */}
+            {viewMode === 'cards' && (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {groupedBookmarks[category].map((bookmark) => (
+                  <BookmarkCard 
+                    key={bookmark.id} 
+                    bookmark={bookmark}
+                    isAdmin={false}
+                  />
+                ))}
+              </div>
+            )}
+            
+            {/* Vue Liste */}
+            {viewMode === 'list' && (
+              <div className="bg-white rounded-lg shadow-md divide-y divide-gray-100">
+                {groupedBookmarks[category].map((bookmark) => (
+                  <BookmarkList 
+                    key={bookmark.id} 
+                    bookmark={bookmark}
+                  />
+                ))}
+              </div>
+            )}
+            
+            {/* Vue Icônes */}
+            {viewMode === 'icons' && (
+              <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-2">
+                {groupedBookmarks[category].map((bookmark) => (
+                  <BookmarkIcon 
+                    key={bookmark.id} 
+                    bookmark={bookmark}
+                  />
+                ))}
+              </div>
+            )}
           </div>
         ))}
 
