@@ -86,9 +86,9 @@ export default function Home() {
     <div className="min-h-screen bg-gray-50">
       {/* Header Desktop avec bande de fond */}
       <div className="hidden md:block bg-blue-50 border-b border-blue-100 sticky top-0 z-10 shadow-sm">
-        <div className="container mx-auto px-4 py-2">
+        <div className="container mx-auto px-4 py-3">
           {/* Titre centré avec logo et Admin */}
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between mb-2">
             {/* Espace vide à gauche pour équilibrer */}
             <div className="w-20"></div>
             
@@ -127,24 +127,44 @@ export default function Home() {
             </Link>
           </div>
           
-          {/* Barre de recherche et catégories sur la même ligne */}
-          <div className="flex items-center gap-4 py-2">
-            {/* Barre de recherche */}
-            <div className="flex-1 max-w-md">
+          {/* Barre de recherche et catégories centrées */}
+          <div className="flex items-center justify-center gap-6">
+            {/* Barre de recherche réduite */}
+            <div className="w-64">
               <SearchBar 
                 value={searchQuery}
                 onChange={setSearchQuery}
-                placeholder="Rechercher dans les favoris..."
+                placeholder="Rechercher..."
               />
             </div>
             
-            {/* Catégories */}
-            <div className="flex-1">
-              <CategoryFilter 
-                categories={categories}
-                activeCategory={activeCategory}
-                onCategoryChange={handleCategoryChange}
-              />
+            {/* Catégories avec style modifié */}
+            <div>
+              <div className="flex flex-wrap gap-1.5">
+                <button
+                  onClick={() => handleCategoryChange('')}
+                  className={`px-3 py-1 rounded-md text-sm transition-colors ${
+                    activeCategory === '' 
+                      ? 'bg-blue-600 text-white' 
+                      : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
+                  }`}
+                >
+                  Toutes
+                </button>
+                {categories.map((category) => (
+                  <button
+                    key={category}
+                    onClick={() => handleCategoryChange(category)}
+                    className={`px-3 py-1 rounded-md text-sm transition-colors ${
+                      activeCategory === category 
+                        ? 'bg-blue-600 text-white' 
+                        : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
+                    }`}
+                  >
+                    {category}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </div>
