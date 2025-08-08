@@ -95,6 +95,7 @@ export default function Home() {
                 value={searchQuery}
                 onChange={setSearchQuery}
                 placeholder="Rechercher..."
+                compact={true}
               />
             </div>
             
