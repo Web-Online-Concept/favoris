@@ -18,6 +18,7 @@ export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url);
     const search = searchParams.get('search');
+    const categoryOrder = searchParams.get('categoryOrder');
     
     let whereClause = {};
     
@@ -40,25 +41,41 @@ export async function GET(request) {
       ],
     });
     
-    // Trier les bookmarks selon l'ordre personnalisé des catégories
-    bookmarks.sort((a, b) => {
-      const indexA = CATEGORY_ORDER.indexOf(a.category);
-      const indexB = CATEGORY_ORDER.indexOf(b.category);
-      
-      // Si les deux sont dans la liste, utiliser leur ordre
-      if (indexA !== -1 && indexB !== -1) {
-        return indexA - indexB;
-      }
-      
-      // Si seulement A est dans la liste, il vient en premier
-      if (indexA !== -1) return -1;
-      
-      // Si seulement B est dans la liste, il vient en premier
-      if (indexB !== -1) return 1;
-      
-      // Si aucun n'est dans la liste, ordre alphabétique
-      return a.category.localeCompare(b.category);
-    });
+    // Si un ordre de catégories est fourni, l'utiliser
+    if (categoryOrder) {
+      const orderArray = categoryOrder.split(',');
+      bookmarks.sort((a, b) => {
+        const indexA = orderArray.indexOf(a.category);
+        const indexB = orderArray.indexOf(b.category);
+        
+        // Si les deux sont dans la liste, utiliser leur ordre
+        if (indexA !== -1 && indexB !== -1) {
+          return indexA - indexB;
+        }
+        
+        // Si seulement A est dans la liste, il vient en premier
+        if (indexA !== -1) return -1;
+        
+        // Si seulement B est dans la liste, il vient en premier
+        if (indexB !== -1) return 1;
+        
+        // Si aucun n'est dans la liste, ordre alphabétique
+        return a.category.localeCompare(b.category);
+      });
+    } else {
+      // Utiliser l'ordre par défaut si aucun n'est fourni
+      bookmarks.sort((a, b) => {
+        const indexA = CATEGORY_ORDER.indexOf(a.category);
+        const indexB = CATEGORY_ORDER.indexOf(b.category);
+        
+        if (indexA !== -1 && indexB !== -1) {
+          return indexA - indexB;
+        }
+        if (indexA !== -1) return -1;
+        if (indexB !== -1) return 1;
+        return a.category.localeCompare(b.category);
+      });
+    }
     
     return NextResponse.json({ bookmarks });
   } catch (error) {
