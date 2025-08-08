@@ -85,45 +85,46 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header Desktop avec bande de fond */}
-      <div className="hidden md:block bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg">
-        <div className="container mx-auto px-4 py-8">
+      <div className="hidden md:block bg-gray-100 border-b border-gray-200">
+        <div className="container mx-auto px-4 py-4">
           {/* Lien Admin en haut à droite */}
-          <div className="flex justify-end mb-6">
+          <div className="flex justify-end mb-2">
             <Link
               href="/admin"
-              className="text-sm text-blue-100 hover:text-white transition-colors"
+              className="text-sm text-gray-600 hover:text-gray-800 transition-colors"
             >
               Admin
             </Link>
           </div>
           
           {/* Titre centré avec logo */}
-          <div className="flex items-center justify-center gap-4 mb-8">
+          <div className="flex items-center justify-center gap-3 mb-4">
             <svg 
               xmlns="http://www.w3.org/2000/svg" 
               viewBox="0 0 32 32"
-              className="w-12 h-12"
+              className="w-10 h-10"
             >
               <defs>
-                <linearGradient id="globeGradientWhite" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" style={{stopColor:'#ffffff',stopOpacity:1}} />
-                  <stop offset="100%" style={{stopColor:'#e0e7ff',stopOpacity:1}} />
+                <linearGradient id="globeGradientDesktop" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style={{stopColor:'#3b82f6',stopOpacity:1}} />
+                  <stop offset="100%" style={{stopColor:'#1e40af',stopOpacity:1}} />
                 </linearGradient>
               </defs>
-              <circle cx="16" cy="16" r="14" fill="none" stroke="white" strokeWidth="2" opacity="0.9"/>
-              <ellipse cx="16" cy="16" rx="6" ry="14" fill="none" stroke="white" strokeWidth="1.5" opacity="0.7"/>
-              <ellipse cx="16" cy="16" rx="11" ry="14" fill="none" stroke="white" strokeWidth="1" opacity="0.5"/>
-              <ellipse cx="16" cy="16" rx="14" ry="5" fill="none" stroke="white" strokeWidth="1.5" opacity="0.7"/>
-              <line x1="2" y1="16" x2="30" y2="16" stroke="white" strokeWidth="1.5" opacity="0.8"/>
-              <ellipse cx="16" cy="16" rx="12" ry="10" fill="none" stroke="white" strokeWidth="1" opacity="0.5"/>
+              <circle cx="16" cy="16" r="14" fill="url(#globeGradientDesktop)" opacity="0.1"/>
+              <circle cx="16" cy="16" r="14" fill="none" stroke="url(#globeGradientDesktop)" strokeWidth="2"/>
+              <ellipse cx="16" cy="16" rx="6" ry="14" fill="none" stroke="#60a5fa" strokeWidth="1.5" opacity="0.8"/>
+              <ellipse cx="16" cy="16" rx="11" ry="14" fill="none" stroke="#3b82f6" strokeWidth="1" opacity="0.6"/>
+              <ellipse cx="16" cy="16" rx="14" ry="5" fill="none" stroke="#60a5fa" strokeWidth="1.5" opacity="0.8"/>
+              <line x1="2" y1="16" x2="30" y2="16" stroke="#2563eb" strokeWidth="1.5" opacity="0.9"/>
+              <ellipse cx="16" cy="16" rx="12" ry="10" fill="none" stroke="#3b82f6" strokeWidth="1" opacity="0.6"/>
             </svg>
-            <h1 className="text-4xl font-bold">
+            <h1 className="text-3xl font-bold text-gray-800">
               favoris.pro : Les meilleurs sites pour vos paris sportifs
             </h1>
           </div>
           
           {/* Barre de recherche */}
-          <div className="max-w-2xl mx-auto mb-6">
+          <div className="max-w-xl mx-auto mb-4">
             <SearchBar 
               value={searchQuery}
               onChange={setSearchQuery}
