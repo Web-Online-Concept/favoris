@@ -13,6 +13,7 @@ export default function Home() {
   const [activeCategory, setActiveCategory] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(true);
+  const [showMobileCategories, setShowMobileCategories] = useState(false);
 
   useEffect(() => {
     fetchBookmarks();
@@ -65,6 +66,11 @@ export default function Home() {
     return acc;
   }, {});
 
+  const handleCategoryChange = (category) => {
+    setActiveCategory(category);
+    setShowMobileCategories(false);
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -79,27 +85,83 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-8">
+        {/* Header avec titre centré sur mobile */}
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">favoris.pro : Les meilleurs sites pour vos paris sportifs</h1>
+          <h1 className="text-3xl md:text-3xl text-base font-bold text-gray-900 text-center md:text-left flex-1 md:flex-initial">
+            favoris.pro : Les meilleurs sites pour vos paris sportifs
+          </h1>
+          {/* Lien Admin caché sur mobile */}
           <Link
             href="/admin"
-            className="text-sm text-gray-500 hover:text-gray-700"
+            className="text-sm text-gray-500 hover:text-gray-700 hidden md:block"
           >
             Admin
           </Link>
         </div>
 
-        <SearchBar 
-          value={searchQuery}
-          onChange={setSearchQuery}
-          placeholder="Rechercher dans les favoris..."
-        />
+        {/* Barre de recherche cachée sur mobile */}
+        <div className="hidden md:block">
+          <SearchBar 
+            value={searchQuery}
+            onChange={setSearchQuery}
+            placeholder="Rechercher dans les favoris..."
+          />
+        </div>
         
-        <CategoryFilter 
-          categories={categories}
-          activeCategory={activeCategory}
-          onCategoryChange={setActiveCategory}
-        />
+        {/* Filtres de catégories - Desktop */}
+        <div className="hidden md:block">
+          <CategoryFilter 
+            categories={categories}
+            activeCategory={activeCategory}
+            onCategoryChange={handleCategoryChange}
+          />
+        </div>
+
+        {/* Menu déroulant pour mobile */}
+        <div className="md:hidden mb-6">
+          <div className="relative">
+            <button
+              onClick={() => setShowMobileCategories(!showMobileCategories)}
+              className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg shadow-sm text-left flex justify-between items-center"
+            >
+              <span className="font-medium">
+                {activeCategory || 'Toutes les catégories'}
+              </span>
+              <svg 
+                className={`w-5 h-5 transition-transform ${showMobileCategories ? 'rotate-180' : ''}`} 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            
+            {showMobileCategories && (
+              <div className="absolute z-10 w-full mt-2 bg-white border border-gray-300 rounded-lg shadow-lg">
+                <button
+                  onClick={() => handleCategoryChange('')}
+                  className={`w-full px-4 py-3 text-left hover:bg-gray-50 ${
+                    activeCategory === '' ? 'bg-blue-50 text-blue-600 font-medium' : ''
+                  }`}
+                >
+                  Toutes les catégories
+                </button>
+                {categories.map((category) => (
+                  <button
+                    key={category}
+                    onClick={() => handleCategoryChange(category)}
+                    className={`w-full px-4 py-3 text-left hover:bg-gray-50 border-t border-gray-100 ${
+                      activeCategory === category ? 'bg-blue-50 text-blue-600 font-medium' : ''
+                    }`}
+                  >
+                    {category}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
 
         {searchQuery && (
           <div className="mb-4">
