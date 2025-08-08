@@ -85,11 +85,37 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-8">
-        {/* Header avec titre centré sur mobile */}
+        {/* Header avec logo et titre centré sur mobile */}
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl md:text-3xl text-base font-bold text-gray-900 text-center md:text-left flex-1 md:flex-initial">
-            favoris.pro : Les meilleurs sites pour vos paris sportifs
-          </h1>
+          <div className="flex items-center gap-2 md:gap-3 flex-1 md:flex-initial justify-center md:justify-start">
+            {/* Logo SVG inline */}
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              viewBox="0 0 32 32"
+              className="w-8 h-8 md:w-10 md:h-10 flex-shrink-0"
+            >
+              {/* Cercle de fond */}
+              <circle cx="16" cy="16" r="14" fill="#1e40af" stroke="#1e3a8a" strokeWidth="2"/>
+              
+              {/* Méridiens verticaux */}
+              <ellipse cx="16" cy="16" rx="6" ry="14" fill="none" stroke="#60a5fa" strokeWidth="1.5"/>
+              <ellipse cx="16" cy="16" rx="11" ry="14" fill="none" stroke="#3b82f6" strokeWidth="1"/>
+              
+              {/* Parallèles horizontaux */}
+              <ellipse cx="16" cy="16" rx="14" ry="5" fill="none" stroke="#60a5fa" strokeWidth="1.5"/>
+              <line x1="2" y1="16" x2="30" y2="16" stroke="#3b82f6" strokeWidth="1.5"/>
+              <ellipse cx="16" cy="16" rx="12" ry="10" fill="none" stroke="#3b82f6" strokeWidth="1"/>
+              
+              {/* Effet de brillance */}
+              <ellipse cx="12" cy="10" rx="4" ry="3" fill="#93c5fd" opacity="0.4"/>
+            </svg>
+            
+            <h1 className="text-lg md:text-3xl font-bold text-gray-900">
+              <span className="hidden md:inline">favoris.pro : Les meilleurs sites pour vos paris sportifs</span>
+              <span className="md:hidden">favoris.pro</span>
+            </h1>
+          </div>
+          
           {/* Lien Admin caché sur mobile */}
           <Link
             href="/admin"
