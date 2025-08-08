@@ -87,25 +87,23 @@ export default function Home() {
       {/* Header Desktop avec bande de fond */}
       <div className="hidden md:block bg-blue-50 border-b border-blue-100 sticky top-0 z-10 shadow-sm">
         <div className="container mx-auto px-4 py-3">
-          {/* Grille 3 colonnes égales */}
-          <div className="grid grid-cols-3 gap-4 items-center mb-2">
-            {/* Colonne 1 : Barre de recherche */}
-            <div className="flex justify-start">
-              <div className="w-64">
-                <SearchBar 
-                  value={searchQuery}
-                  onChange={setSearchQuery}
-                  placeholder="Rechercher..."
-                />
-              </div>
+          {/* Flex avec colonnes fixes */}
+          <div className="flex items-center justify-between mb-2">
+            {/* Colonne gauche - largeur fixe */}
+            <div className="w-64">
+              <SearchBar 
+                value={searchQuery}
+                onChange={setSearchQuery}
+                placeholder="Rechercher..."
+              />
             </div>
             
-            {/* Colonne 2 : Logo et titre */}
-            <div className="flex items-center justify-center gap-3">
+            {/* Colonne centre - flexible */}
+            <div className="flex-1 flex items-center justify-center gap-3">
               <svg 
                 xmlns="http://www.w3.org/2000/svg" 
                 viewBox="0 0 32 32"
-                className="w-8 h-8"
+                className="w-8 h-8 flex-shrink-0"
               >
                 <defs>
                   <linearGradient id="globeGradientDesktop" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -121,13 +119,13 @@ export default function Home() {
                 <line x1="2" y1="16" x2="30" y2="16" stroke="#2563eb" strokeWidth="1.5" opacity="0.9"/>
                 <ellipse cx="16" cy="16" rx="12" ry="10" fill="none" stroke="#3b82f6" strokeWidth="1" opacity="0.6"/>
               </svg>
-              <h1 className="text-2xl font-bold text-gray-800">
+              <h1 className="text-2xl font-bold text-gray-800 whitespace-nowrap">
                 favoris.pro : Les meilleurs sites pour vos paris sportifs
               </h1>
             </div>
             
-            {/* Colonne 3 : Admin */}
-            <div className="flex justify-end">
+            {/* Colonne droite - largeur fixe */}
+            <div className="w-64 text-right">
               <Link
                 href="/admin"
                 className="text-sm text-blue-600 hover:text-blue-800 transition-colors"
@@ -137,7 +135,7 @@ export default function Home() {
             </div>
           </div>
           
-          {/* Catégories centrées seules sur leur ligne */}
+          {/* Catégories centrées */}
           <div className="flex justify-center">
             <div className="flex flex-wrap gap-1.5">
               <button
