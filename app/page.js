@@ -94,20 +94,34 @@ export default function Home() {
               viewBox="0 0 32 32"
               className="w-8 h-8 md:w-10 md:h-10 flex-shrink-0"
             >
-              {/* Cercle de fond */}
-              <circle cx="16" cy="16" r="14" fill="#1e40af" stroke="#1e3a8a" strokeWidth="2"/>
+              {/* Dégradé pour un effet plus moderne */}
+              <defs>
+                <linearGradient id="globeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style={{stopColor:'#3b82f6',stopOpacity:1}} />
+                  <stop offset="100%" style={{stopColor:'#1e40af',stopOpacity:1}} />
+                </linearGradient>
+                <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style={{stopColor:'#60a5fa',stopOpacity:1}} />
+                  <stop offset="100%" style={{stopColor:'#2563eb',stopOpacity:1}} />
+                </linearGradient>
+              </defs>
+              
+              {/* Cercle principal avec dégradé */}
+              <circle cx="16" cy="16" r="14" fill="url(#globeGradient)" opacity="0.1"/>
+              <circle cx="16" cy="16" r="14" fill="none" stroke="url(#globeGradient)" strokeWidth="2"/>
               
               {/* Méridiens verticaux */}
-              <ellipse cx="16" cy="16" rx="6" ry="14" fill="none" stroke="#60a5fa" strokeWidth="1.5"/>
-              <ellipse cx="16" cy="16" rx="11" ry="14" fill="none" stroke="#3b82f6" strokeWidth="1"/>
+              <ellipse cx="16" cy="16" rx="6" ry="14" fill="none" stroke="url(#lineGradient)" strokeWidth="1.5" opacity="0.8"/>
+              <ellipse cx="16" cy="16" rx="11" ry="14" fill="none" stroke="#3b82f6" strokeWidth="1" opacity="0.6"/>
               
               {/* Parallèles horizontaux */}
-              <ellipse cx="16" cy="16" rx="14" ry="5" fill="none" stroke="#60a5fa" strokeWidth="1.5"/>
-              <line x1="2" y1="16" x2="30" y2="16" stroke="#3b82f6" strokeWidth="1.5"/>
-              <ellipse cx="16" cy="16" rx="12" ry="10" fill="none" stroke="#3b82f6" strokeWidth="1"/>
+              <ellipse cx="16" cy="16" rx="14" ry="5" fill="none" stroke="url(#lineGradient)" strokeWidth="1.5" opacity="0.8"/>
+              <line x1="2" y1="16" x2="30" y2="16" stroke="#2563eb" strokeWidth="1.5" opacity="0.9"/>
+              <ellipse cx="16" cy="16" rx="12" ry="10" fill="none" stroke="#3b82f6" strokeWidth="1" opacity="0.6"/>
               
-              {/* Effet de brillance */}
-              <ellipse cx="12" cy="10" rx="4" ry="3" fill="#93c5fd" opacity="0.4"/>
+              {/* Effet de brillance amélioré */}
+              <ellipse cx="11" cy="8" rx="6" ry="4" fill="#93c5fd" opacity="0.3"/>
+              <ellipse cx="13" cy="9" rx="3" ry="2" fill="#dbeafe" opacity="0.5"/>
             </svg>
             
             <h1 className="text-lg md:text-3xl font-bold text-gray-900">
