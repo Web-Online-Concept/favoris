@@ -4,12 +4,10 @@ import { getServerSession } from 'next-auth';
 
 // Définis l'ordre personnalisé des catégories ici
 const CATEGORY_ORDER = [
-  'Paris Sportifs',
-  'Pronostics',
-  'Statistiques',
-  'Actualités',
+  'Books Arjel',
+  'Books Hors Arjel',
   'Outils',
-  'Forums',
+  'Cryptos',
   // Les catégories non listées apparaîtront après, par ordre alphabétique
 ];
 
@@ -18,7 +16,6 @@ export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url);
     const search = searchParams.get('search');
-    const categoryOrder = searchParams.get('categoryOrder');
     
     let whereClause = {};
     
@@ -41,12 +38,14 @@ export async function GET(request) {
       ],
     });
     
-    // Si un ordre de catégories est fourni, l'utiliser
-    if (categoryOrder) {
-      const orderArray = categoryOrder.split(',');
+    // Récupérer l'ordre des catégories depuis la base de données
+    const savedOrder = await prisma.categoryOrder.findFirst();
+    
+    if (savedOrder && savedOrder.categories.length > 0) {
+      // Trier selon l'ordre sauvegardé dans la base de données
       bookmarks.sort((a, b) => {
-        const indexA = orderArray.indexOf(a.category);
-        const indexB = orderArray.indexOf(b.category);
+        const indexA = savedOrder.categories.indexOf(a.category);
+        const indexB = savedOrder.categories.indexOf(b.category);
         
         // Si les deux sont dans la liste, utiliser leur ordre
         if (indexA !== -1 && indexB !== -1) {
@@ -63,7 +62,7 @@ export async function GET(request) {
         return a.category.localeCompare(b.category);
       });
     } else {
-      // Utiliser l'ordre par défaut si aucun n'est fourni
+      // Utiliser l'ordre par défaut si rien n'est sauvegardé
       bookmarks.sort((a, b) => {
         const indexA = CATEGORY_ORDER.indexOf(a.category);
         const indexB = CATEGORY_ORDER.indexOf(b.category);

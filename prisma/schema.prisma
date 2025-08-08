@@ -20,3 +20,10 @@ model Bookmark {
 
   @@index([category])
 }
+
+model CategoryOrder {
+  id         String   @id @default(cuid())
+  categories String[] // Array des catégories dans l'ordre
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}

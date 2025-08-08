@@ -29,16 +29,7 @@ export default function Home() {
 
   const fetchBookmarks = async () => {
     try {
-      // Récupérer l'ordre des catégories depuis localStorage
-      const savedOrder = localStorage.getItem('categoryOrder');
-      let url = '/api/bookmarks';
-      
-      if (savedOrder) {
-        const orderArray = JSON.parse(savedOrder);
-        url += `?categoryOrder=${encodeURIComponent(orderArray.join(','))}`;
-      }
-      
-      const res = await fetch(url);
+      const res = await fetch('/api/bookmarks');
       const data = await res.json();
       setBookmarks(data.bookmarks);
       setAllBookmarks(data.bookmarks);
@@ -55,16 +46,7 @@ export default function Home() {
 
   const performSearch = async (query) => {
     try {
-      // Récupérer l'ordre des catégories depuis localStorage
-      const savedOrder = localStorage.getItem('categoryOrder');
-      let url = `/api/bookmarks?search=${encodeURIComponent(query)}`;
-      
-      if (savedOrder) {
-        const orderArray = JSON.parse(savedOrder);
-        url += `&categoryOrder=${encodeURIComponent(orderArray.join(','))}`;
-      }
-      
-      const res = await fetch(url);
+      const res = await fetch(`/api/bookmarks?search=${encodeURIComponent(query)}`);
       const data = await res.json();
       setBookmarks(data.bookmarks);
     } catch (error) {

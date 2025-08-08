@@ -9,7 +9,6 @@ export default function CategoriesPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
   const [categories, setCategories] = useState([]);
-  const [categoryOrder, setCategoryOrder] = useState([]);
   const [editingCategory, setEditingCategory] = useState(null);
   const [newName, setNewName] = useState('');
   const [loading, setLoading] = useState(true);
@@ -21,14 +20,13 @@ export default function CategoriesPage() {
       return;
     }
     fetchCategories();
-    loadCategoryOrder();
   }, [session, status, router]);
 
   const fetchCategories = async () => {
     try {
       const res = await fetch('/api/categories');
       const data = await res.json();
-      setCategories(data.categories);
+      setCategories(data.categories || []);
       setLoading(false);
     } catch (error) {
       console.error('Error fetching categories:', error);
@@ -36,20 +34,24 @@ export default function CategoriesPage() {
     }
   };
 
-  const loadCategoryOrder = () => {
-    const saved = localStorage.getItem('categoryOrder');
-    if (saved) {
-      setCategoryOrder(JSON.parse(saved));
+  const saveCategoryOrder = async (newOrder) => {
+    try {
+      const res = await fetch('/api/categories', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ categories: newOrder }),
+      });
+
+      if (res.ok) {
+        setCategories(newOrder);
+      }
+    } catch (error) {
+      console.error('Error saving category order:', error);
     }
   };
 
-  const saveCategoryOrder = (newOrder) => {
-    setCategoryOrder(newOrder);
-    localStorage.setItem('categoryOrder', JSON.stringify(newOrder));
-  };
-
   const moveCategory = (index, direction) => {
-    const newOrder = [...categoryOrder];
+    const newOrder = [...categories];
     const temp = newOrder[index];
     
     if (direction === 'up' && index > 0) {
@@ -78,12 +80,6 @@ export default function CategoriesPage() {
       });
 
       if (res.ok) {
-        // Mettre à jour l'ordre des catégories
-        const updatedOrder = categoryOrder.map(cat => 
-          cat === oldName ? newName : cat
-        );
-        saveCategoryOrder(updatedOrder);
-        
         fetchCategories();
         setEditingCategory(null);
         setNewName('');
@@ -105,10 +101,6 @@ export default function CategoriesPage() {
       });
 
       if (res.ok) {
-        // Retirer de l'ordre des catégories
-        const updatedOrder = categoryOrder.filter(cat => cat !== category);
-        saveCategoryOrder(updatedOrder);
-        
         fetchCategories();
       }
     } catch (error) {
@@ -116,19 +108,6 @@ export default function CategoriesPage() {
       alert('Erreur lors de la suppression');
     }
   };
-
-  // Organiser les catégories selon l'ordre sauvegardé
-  const orderedCategories = [
-    ...categoryOrder.filter(cat => categories.includes(cat)),
-    ...categories.filter(cat => !categoryOrder.includes(cat))
-  ];
-
-  // Sauvegarder l'ordre si de nouvelles catégories apparaissent
-  useEffect(() => {
-    if (orderedCategories.length > 0 && orderedCategories.length !== categoryOrder.length) {
-      saveCategoryOrder(orderedCategories);
-    }
-  }, [orderedCategories.length, categoryOrder.length]);
 
   if (loading || status === 'loading') {
     return (
@@ -162,7 +141,7 @@ export default function CategoriesPage() {
           </p>
 
           <div className="space-y-3">
-            {orderedCategories.map((category, index) => (
+            {categories.map((category, index) => (
               <div
                 key={category}
                 className="flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-200"
@@ -178,7 +157,7 @@ export default function CategoriesPage() {
                     </button>
                     <button
                       onClick={() => moveCategory(index, 'down')}
-                      disabled={index === orderedCategories.length - 1}
+                      disabled={index === categories.length - 1}
                       className="text-gray-400 hover:text-gray-600 disabled:opacity-30 disabled:cursor-not-allowed"
                     >
                       ▼
@@ -243,7 +222,7 @@ export default function CategoriesPage() {
             ))}
           </div>
 
-          {orderedCategories.length === 0 && (
+          {categories.length === 0 && (
             <p className="text-center text-gray-500 py-8">
               Aucune catégorie trouvée. Ajoutez des favoris pour créer des catégories.
             </p>
