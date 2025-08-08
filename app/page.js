@@ -90,12 +90,14 @@ export default function Home() {
           {/* Ligne unique avec recherche, titre et admin */}
           <div className="flex items-center justify-between mb-2">
             {/* Barre de recherche à gauche */}
-            <div className="w-64">
-              <SearchBar 
-                value={searchQuery}
-                onChange={setSearchQuery}
-                placeholder="Rechercher..."
-              />
+            <div className="w-64 flex items-center h-full">
+              <div className="w-full">
+                <SearchBar 
+                  value={searchQuery}
+                  onChange={setSearchQuery}
+                  placeholder="Rechercher..."
+                />
+              </div>
             </div>
             
             {/* Logo et titre au centre */}
@@ -125,12 +127,14 @@ export default function Home() {
             </div>
             
             {/* Lien Admin à droite */}
-            <Link
-              href="/admin"
-              className="text-sm text-blue-600 hover:text-blue-800 transition-colors w-64 text-right"
-            >
-              Admin
-            </Link>
+            <div className="w-64 flex items-center justify-end h-full">
+              <Link
+                href="/admin"
+                className="text-sm text-blue-600 hover:text-blue-800 transition-colors"
+              >
+                Admin
+              </Link>
+            </div>
           </div>
           
           {/* Catégories centrées seules sur leur ligne */}
