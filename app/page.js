@@ -87,82 +87,81 @@ export default function Home() {
       {/* Header Desktop avec bande de fond */}
       <div className="hidden md:block bg-blue-50 border-b border-blue-100 sticky top-0 z-10 shadow-sm">
         <div className="container mx-auto px-4 py-3">
-          {/* Ligne unique avec recherche, titre et admin */}
-          <div className="flex items-center justify-between mb-2">
-            {/* Barre de recherche à gauche */}
-            <div className="w-64 flex items-center h-full">
-              <div className="w-full">
+          {/* Conteneur flex pour centrer verticalement */}
+          <div className="flex flex-col justify-center h-full">
+            {/* Ligne unique avec recherche, titre et admin */}
+            <div className="flex items-center justify-between mb-2">
+              {/* Barre de recherche à gauche */}
+              <div className="w-64">
                 <SearchBar 
                   value={searchQuery}
                   onChange={setSearchQuery}
                   placeholder="Rechercher..."
                 />
               </div>
-            </div>
-            
-            {/* Logo et titre au centre */}
-            <div className="flex items-center justify-center gap-3">
-              <svg 
-                xmlns="http://www.w3.org/2000/svg" 
-                viewBox="0 0 32 32"
-                className="w-8 h-8"
-              >
-                <defs>
-                  <linearGradient id="globeGradientDesktop" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" style={{stopColor:'#3b82f6',stopOpacity:1}} />
-                    <stop offset="100%" style={{stopColor:'#1e40af',stopOpacity:1}} />
-                  </linearGradient>
-                </defs>
-                <circle cx="16" cy="16" r="14" fill="url(#globeGradientDesktop)" opacity="0.1"/>
-                <circle cx="16" cy="16" r="14" fill="none" stroke="url(#globeGradientDesktop)" strokeWidth="2"/>
-                <ellipse cx="16" cy="16" rx="6" ry="14" fill="none" stroke="#60a5fa" strokeWidth="1.5" opacity="0.8"/>
-                <ellipse cx="16" cy="16" rx="11" ry="14" fill="none" stroke="#3b82f6" strokeWidth="1" opacity="0.6"/>
-                <ellipse cx="16" cy="16" rx="14" ry="5" fill="none" stroke="#60a5fa" strokeWidth="1.5" opacity="0.8"/>
-                <line x1="2" y1="16" x2="30" y2="16" stroke="#2563eb" strokeWidth="1.5" opacity="0.9"/>
-                <ellipse cx="16" cy="16" rx="12" ry="10" fill="none" stroke="#3b82f6" strokeWidth="1" opacity="0.6"/>
-              </svg>
-              <h1 className="text-2xl font-bold text-gray-800">
-                favoris.pro : Les meilleurs sites pour vos paris sportifs
-              </h1>
-            </div>
-            
-            {/* Lien Admin à droite */}
-            <div className="w-64 flex items-center justify-end h-full">
+              
+              {/* Logo et titre au centre */}
+              <div className="flex items-center justify-center gap-3">
+                <svg 
+                  xmlns="http://www.w3.org/2000/svg" 
+                  viewBox="0 0 32 32"
+                  className="w-8 h-8"
+                >
+                  <defs>
+                    <linearGradient id="globeGradientDesktop" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" style={{stopColor:'#3b82f6',stopOpacity:1}} />
+                      <stop offset="100%" style={{stopColor:'#1e40af',stopOpacity:1}} />
+                    </linearGradient>
+                  </defs>
+                  <circle cx="16" cy="16" r="14" fill="url(#globeGradientDesktop)" opacity="0.1"/>
+                  <circle cx="16" cy="16" r="14" fill="none" stroke="url(#globeGradientDesktop)" strokeWidth="2"/>
+                  <ellipse cx="16" cy="16" rx="6" ry="14" fill="none" stroke="#60a5fa" strokeWidth="1.5" opacity="0.8"/>
+                  <ellipse cx="16" cy="16" rx="11" ry="14" fill="none" stroke="#3b82f6" strokeWidth="1" opacity="0.6"/>
+                  <ellipse cx="16" cy="16" rx="14" ry="5" fill="none" stroke="#60a5fa" strokeWidth="1.5" opacity="0.8"/>
+                  <line x1="2" y1="16" x2="30" y2="16" stroke="#2563eb" strokeWidth="1.5" opacity="0.9"/>
+                  <ellipse cx="16" cy="16" rx="12" ry="10" fill="none" stroke="#3b82f6" strokeWidth="1" opacity="0.6"/>
+                </svg>
+                <h1 className="text-2xl font-bold text-gray-800">
+                  favoris.pro : Les meilleurs sites pour vos paris sportifs
+                </h1>
+              </div>
+              
+              {/* Lien Admin à droite */}
               <Link
                 href="/admin"
-                className="text-sm text-blue-600 hover:text-blue-800 transition-colors"
+                className="text-sm text-blue-600 hover:text-blue-800 transition-colors w-64 text-right"
               >
                 Admin
               </Link>
             </div>
-          </div>
-          
-          {/* Catégories centrées seules sur leur ligne */}
-          <div className="flex justify-center">
-            <div className="flex flex-wrap gap-1.5">
-              <button
-                onClick={() => handleCategoryChange('')}
-                className={`px-3 py-1 rounded-md text-sm transition-colors ${
-                  activeCategory === '' 
-                    ? 'bg-blue-600 text-white' 
-                    : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
-                }`}
-              >
-                Toutes
-              </button>
-              {categories.map((category) => (
+            
+            {/* Catégories centrées seules sur leur ligne */}
+            <div className="flex justify-center">
+              <div className="flex flex-wrap gap-1.5">
                 <button
-                  key={category}
-                  onClick={() => handleCategoryChange(category)}
+                  onClick={() => handleCategoryChange('')}
                   className={`px-3 py-1 rounded-md text-sm transition-colors ${
-                    activeCategory === category 
+                    activeCategory === '' 
                       ? 'bg-blue-600 text-white' 
                       : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
                   }`}
                 >
-                  {category}
+                  Toutes
                 </button>
-              ))}
+                {categories.map((category) => (
+                  <button
+                    key={category}
+                    onClick={() => handleCategoryChange(category)}
+                    className={`px-3 py-1 rounded-md text-sm transition-colors ${
+                      activeCategory === category 
+                        ? 'bg-blue-600 text-white' 
+                        : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
+                    }`}
+                  >
+                    {category}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </div>
