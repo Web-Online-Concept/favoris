@@ -104,7 +104,7 @@ export default function Home() {
         {searchQuery && (
           <div className="mb-4">
             <p className="text-sm text-gray-600">
-              {filteredBookmarks.length} résultat{filteredBookmarks.length !== 1 ? 's' : ''} pour "{searchQuery}"
+              {filteredBookmarks.length} résultat{filteredBookmarks.length !== 1 ? 's' : ''} pour &quot;{searchQuery}&quot;
             </p>
           </div>
         )}
@@ -130,7 +130,7 @@ export default function Home() {
           <div className="text-center py-10">
             <p className="text-gray-500">
               {searchQuery 
-                ? `Aucun résultat pour "${searchQuery}"`
+                ? `Aucun résultat pour &quot;${searchQuery}&quot;`
                 : 'Aucun favori trouvé dans cette catégorie.'}
             </p>
           </div>

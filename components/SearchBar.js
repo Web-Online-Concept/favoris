@@ -1,17 +1,19 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 export default function SearchBar({ value, onChange, placeholder }) {
   const [localValue, setLocalValue] = useState(value);
 
+  const debouncedOnChange = useCallback(onChange, []);
+
   useEffect(() => {
     const debounceTimer = setTimeout(() => {
-      onChange(localValue);
+      debouncedOnChange(localValue);
     }, 300);
 
     return () => clearTimeout(debounceTimer);
-  }, [localValue]);
+  }, [localValue, debouncedOnChange]);
 
   return (
     <div className="mb-6">

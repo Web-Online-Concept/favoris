@@ -129,7 +129,7 @@ export default function BookmarkForm({ bookmark, onSubmit, onCancel, existingCat
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700">Ordre d'affichage</label>
+        <label className="block text-sm font-medium text-gray-700">Ordre d&apos;affichage</label>
         <input
           type="number"
           value={formData.order}

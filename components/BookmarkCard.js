@@ -19,6 +19,7 @@ export default function BookmarkCard({ bookmark, isAdmin, onEdit, onDelete }) {
       onClick={handleCardClick}
     >
       <div className="flex items-start gap-3">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img 
           src={bookmark.logoUrl || '/default-favicon.png'} 
           alt={bookmark.title}

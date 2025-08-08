@@ -22,7 +22,7 @@ export default function CategoriesPage() {
     }
     fetchCategories();
     loadCategoryOrder();
-  }, [session, status]);
+  }, [session, status, router]);
 
   const fetchCategories = async () => {
     try {
@@ -128,7 +128,7 @@ export default function CategoriesPage() {
     if (orderedCategories.length > 0 && orderedCategories.length !== categoryOrder.length) {
       saveCategoryOrder(orderedCategories);
     }
-  }, [orderedCategories, categoryOrder.length]);
+  }, [orderedCategories.length, categoryOrder.length]);
 
   if (loading || status === 'loading') {
     return (
@@ -158,7 +158,7 @@ export default function CategoriesPage() {
 
         <div className="bg-white rounded-lg shadow-md p-6">
           <p className="text-sm text-gray-600 mb-6">
-            Gérez l'ordre, renommez ou supprimez vos catégories. L'ordre défini ici sera utilisé sur le site.
+            Gérez l&apos;ordre, renommez ou supprimez vos catégories. L&apos;ordre défini ici sera utilisé sur le site.
           </p>
 
           <div className="space-y-3">
