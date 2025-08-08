@@ -87,10 +87,16 @@ export default function Home() {
       {/* Header Desktop avec bande de fond */}
       <div className="hidden md:block bg-blue-50 border-b border-blue-100 sticky top-0 z-10 shadow-sm">
         <div className="container mx-auto px-4 py-3">
-          {/* Titre centré avec logo et Admin */}
+          {/* Ligne unique avec recherche, titre et admin */}
           <div className="flex items-center justify-between mb-2">
-            {/* Espace vide à gauche pour équilibrer */}
-            <div className="w-20"></div>
+            {/* Barre de recherche à gauche */}
+            <div className="w-64">
+              <SearchBar 
+                value={searchQuery}
+                onChange={setSearchQuery}
+                placeholder="Rechercher..."
+              />
+            </div>
             
             {/* Logo et titre au centre */}
             <div className="flex items-center justify-center gap-3">
@@ -121,50 +127,38 @@ export default function Home() {
             {/* Lien Admin à droite */}
             <Link
               href="/admin"
-              className="text-sm text-blue-600 hover:text-blue-800 transition-colors w-20 text-right"
+              className="text-sm text-blue-600 hover:text-blue-800 transition-colors w-64 text-right"
             >
               Admin
             </Link>
           </div>
           
-          {/* Barre de recherche et catégories centrées */}
-          <div className="flex items-center justify-center gap-6">
-            {/* Barre de recherche réduite */}
-            <div className="w-64">
-              <SearchBar 
-                value={searchQuery}
-                onChange={setSearchQuery}
-                placeholder="Rechercher..."
-              />
-            </div>
-            
-            {/* Catégories avec style modifié */}
-            <div>
-              <div className="flex flex-wrap gap-1.5">
+          {/* Catégories centrées seules sur leur ligne */}
+          <div className="flex justify-center">
+            <div className="flex flex-wrap gap-1.5">
+              <button
+                onClick={() => handleCategoryChange('')}
+                className={`px-3 py-1 rounded-md text-sm transition-colors ${
+                  activeCategory === '' 
+                    ? 'bg-blue-600 text-white' 
+                    : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
+                }`}
+              >
+                Toutes
+              </button>
+              {categories.map((category) => (
                 <button
-                  onClick={() => handleCategoryChange('')}
+                  key={category}
+                  onClick={() => handleCategoryChange(category)}
                   className={`px-3 py-1 rounded-md text-sm transition-colors ${
-                    activeCategory === '' 
+                    activeCategory === category 
                       ? 'bg-blue-600 text-white' 
                       : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
                   }`}
                 >
-                  Toutes
+                  {category}
                 </button>
-                {categories.map((category) => (
-                  <button
-                    key={category}
-                    onClick={() => handleCategoryChange(category)}
-                    className={`px-3 py-1 rounded-md text-sm transition-colors ${
-                      activeCategory === category 
-                        ? 'bg-blue-600 text-white' 
-                        : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
-                    }`}
-                  >
-                    {category}
-                  </button>
-                ))}
-              </div>
+              ))}
             </div>
           </div>
         </div>
