@@ -51,9 +51,14 @@ export default function Home() {
       setBookmarks(data.bookmarks);
       setAllBookmarks(data.bookmarks);
       
-      // Extract unique categories
-      const uniqueCategories = [...new Set(data.bookmarks.map(b => b.category))];
-      setCategories(uniqueCategories.sort());
+      // Extract unique categories en préservant l'ordre
+      const uniqueCategories = [];
+      data.bookmarks.forEach(bookmark => {
+        if (!uniqueCategories.includes(bookmark.category)) {
+          uniqueCategories.push(bookmark.category);
+        }
+      });
+      setCategories(uniqueCategories);
       setLoading(false);
     } catch (error) {
       console.error('Error fetching bookmarks:', error);
