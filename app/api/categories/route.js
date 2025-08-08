@@ -17,7 +17,7 @@ export async function GET() {
     const savedOrder = await prisma.categoryOrder.findFirst();
     
     let orderedCategories = categories;
-    if (savedOrder && savedOrder.categories.length > 0) {
+    if (savedOrder && savedOrder.categories && savedOrder.categories.length > 0) {
       // Réorganiser selon l'ordre sauvegardé
       const orderMap = savedOrder.categories;
       orderedCategories = [
@@ -31,8 +31,8 @@ export async function GET() {
       order: savedOrder 
     });
   } catch (error) {
-    console.error('Error fetching categories:', error);
-    return NextResponse.json({ error: 'Error fetching categories' }, { status: 500 });
+    console.error('Error in GET /api/categories:', error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
 

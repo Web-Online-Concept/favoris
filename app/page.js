@@ -66,6 +66,14 @@ export default function Home() {
     return acc;
   }, {});
 
+  // Créer un array ordonné des catégories basé sur l'ordre des bookmarks
+  const orderedCategories = [];
+  filteredBookmarks.forEach(bookmark => {
+    if (!orderedCategories.includes(bookmark.category)) {
+      orderedCategories.push(bookmark.category);
+    }
+  });
+
   const handleCategoryChange = (category) => {
     setActiveCategory(category);
     setShowMobileCategories(false);
@@ -256,22 +264,20 @@ export default function Home() {
           </div>
         )}
 
-        {Object.entries(groupedBookmarks)
-          .sort(([a], [b]) => a.localeCompare(b))
-          .map(([category, categoryBookmarks]) => (
-            <div key={category} className="mb-8">
-              <h2 className="text-2xl font-semibold mb-4 text-gray-800">{category}</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {categoryBookmarks.map((bookmark) => (
-                  <BookmarkCard 
-                    key={bookmark.id} 
-                    bookmark={bookmark}
-                    isAdmin={false}
-                  />
-                ))}
-              </div>
+        {orderedCategories.map((category) => (
+          <div key={category} className="mb-8">
+            <h2 className="text-2xl font-semibold mb-4 text-gray-800">{category}</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {groupedBookmarks[category].map((bookmark) => (
+                <BookmarkCard 
+                  key={bookmark.id} 
+                  bookmark={bookmark}
+                  isAdmin={false}
+                />
+              ))}
             </div>
-          ))}
+          </div>
+        ))}
 
         {filteredBookmarks.length === 0 && (
           <div className="text-center py-10">
