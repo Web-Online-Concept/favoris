@@ -166,54 +166,6 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </div>82f6" strokeWidth="1" opacity="0.6"/>
-                <ellipse cx="16" cy="16" rx="14" ry="5" fill="none" stroke="#60a5fa" strokeWidth="1.5" opacity="0.8"/>
-                <line x1="2" y1="16" x2="30" y2="16" stroke="#2563eb" strokeWidth="1.5" opacity="0.9"/>
-                <ellipse cx="16" cy="16" rx="12" ry="10" fill="none" stroke="#3b82f6" strokeWidth="1" opacity="0.6"/>
-              </svg>
-              <h1 className="text-2xl font-bold text-gray-800">
-                favoris.pro : Les meilleurs sites pour vos paris sportifs
-              </h1>
-            </div>
-            
-            {/* Lien Admin à droite */}
-            <Link
-              href="/admin"
-              className="text-sm text-blue-600 hover:text-blue-800 transition-colors w-64 text-right"
-            >
-              Admin
-            </Link>
-          </div>
-          
-          {/* Catégories centrées seules sur leur ligne */}
-          <div className="flex justify-center">
-            <div className="flex flex-wrap gap-1.5">
-              <button
-                onClick={() => handleCategoryChange('')}
-                className={`px-3 py-1 rounded-md text-sm transition-colors ${
-                  activeCategory === '' 
-                    ? 'bg-blue-600 text-white' 
-                    : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
-                }`}
-              >
-                Toutes
-              </button>
-              {categories.map((category) => (
-                <button
-                  key={category}
-                  onClick={() => handleCategoryChange(category)}
-                  className={`px-3 py-1 rounded-md text-sm transition-colors ${
-                    activeCategory === category 
-                      ? 'bg-blue-600 text-white' 
-                      : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
-                  }`}
-                >
-                  {category}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
       </div>
 
       {/* Header Mobile */}
