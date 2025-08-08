@@ -84,91 +84,108 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-8">
-        {/* Header avec logo et titre centré sur mobile */}
-        <div className="flex justify-between items-center mb-8">
-          <div className="flex items-center gap-2 md:gap-3 flex-1 md:flex-initial justify-center md:justify-start">
-            {/* Logo SVG inline */}
+      {/* Header Desktop avec bande de fond */}
+      <div className="hidden md:block bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg">
+        <div className="container mx-auto px-4 py-8">
+          {/* Lien Admin en haut à droite */}
+          <div className="flex justify-end mb-6">
+            <Link
+              href="/admin"
+              className="text-sm text-blue-100 hover:text-white transition-colors"
+            >
+              Admin
+            </Link>
+          </div>
+          
+          {/* Titre centré avec logo */}
+          <div className="flex items-center justify-center gap-4 mb-8">
             <svg 
               xmlns="http://www.w3.org/2000/svg" 
               viewBox="0 0 32 32"
-              className="w-8 h-8 md:w-10 md:h-10 flex-shrink-0"
+              className="w-12 h-12"
             >
-              {/* Dégradé pour un effet plus moderne */}
               <defs>
-                <linearGradient id="globeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" style={{stopColor:'#3b82f6',stopOpacity:1}} />
-                  <stop offset="100%" style={{stopColor:'#1e40af',stopOpacity:1}} />
-                </linearGradient>
-                <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" style={{stopColor:'#60a5fa',stopOpacity:1}} />
-                  <stop offset="100%" style={{stopColor:'#2563eb',stopOpacity:1}} />
+                <linearGradient id="globeGradientWhite" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style={{stopColor:'#ffffff',stopOpacity:1}} />
+                  <stop offset="100%" style={{stopColor:'#e0e7ff',stopOpacity:1}} />
                 </linearGradient>
               </defs>
-              
-              {/* Cercle principal avec dégradé */}
-              <circle cx="16" cy="16" r="14" fill="url(#globeGradient)" opacity="0.1"/>
-              <circle cx="16" cy="16" r="14" fill="none" stroke="url(#globeGradient)" strokeWidth="2"/>
-              
-              {/* Méridiens verticaux */}
-              <ellipse cx="16" cy="16" rx="6" ry="14" fill="none" stroke="url(#lineGradient)" strokeWidth="1.5" opacity="0.8"/>
-              <ellipse cx="16" cy="16" rx="11" ry="14" fill="none" stroke="#3b82f6" strokeWidth="1" opacity="0.6"/>
-              
-              {/* Parallèles horizontaux */}
-              <ellipse cx="16" cy="16" rx="14" ry="5" fill="none" stroke="url(#lineGradient)" strokeWidth="1.5" opacity="0.8"/>
-              <line x1="2" y1="16" x2="30" y2="16" stroke="#2563eb" strokeWidth="1.5" opacity="0.9"/>
-              <ellipse cx="16" cy="16" rx="12" ry="10" fill="none" stroke="#3b82f6" strokeWidth="1" opacity="0.6"/>
-              
-              {/* Effet de brillance amélioré */}
-              <ellipse cx="11" cy="8" rx="6" ry="4" fill="#93c5fd" opacity="0.3"/>
-              <ellipse cx="13" cy="9" rx="3" ry="2" fill="#dbeafe" opacity="0.5"/>
+              <circle cx="16" cy="16" r="14" fill="none" stroke="white" strokeWidth="2" opacity="0.9"/>
+              <ellipse cx="16" cy="16" rx="6" ry="14" fill="none" stroke="white" strokeWidth="1.5" opacity="0.7"/>
+              <ellipse cx="16" cy="16" rx="11" ry="14" fill="none" stroke="white" strokeWidth="1" opacity="0.5"/>
+              <ellipse cx="16" cy="16" rx="14" ry="5" fill="none" stroke="white" strokeWidth="1.5" opacity="0.7"/>
+              <line x1="2" y1="16" x2="30" y2="16" stroke="white" strokeWidth="1.5" opacity="0.8"/>
+              <ellipse cx="16" cy="16" rx="12" ry="10" fill="none" stroke="white" strokeWidth="1" opacity="0.5"/>
             </svg>
-            
-            <h1 className="text-lg md:text-3xl font-bold text-gray-900">
-              <span className="hidden md:inline">favoris.pro : Les meilleurs sites pour vos paris sportifs</span>
-              <span className="md:hidden">favoris.pro</span>
+            <h1 className="text-4xl font-bold">
+              favoris.pro : Les meilleurs sites pour vos paris sportifs
             </h1>
           </div>
           
-          {/* Lien Admin caché sur mobile */}
-          <Link
-            href="/admin"
-            className="text-sm text-gray-500 hover:text-gray-700 hidden md:block"
-          >
-            Admin
-          </Link>
+          {/* Barre de recherche */}
+          <div className="max-w-2xl mx-auto mb-6">
+            <SearchBar 
+              value={searchQuery}
+              onChange={setSearchQuery}
+              placeholder="Rechercher dans les favoris..."
+            />
+          </div>
+          
+          {/* Catégories */}
+          <div className="flex justify-center">
+            <CategoryFilter 
+              categories={categories}
+              activeCategory={activeCategory}
+              onCategoryChange={handleCategoryChange}
+            />
+          </div>
         </div>
+      </div>
 
-        {/* Barre de recherche cachée sur mobile */}
-        <div className="hidden md:block">
-          <SearchBar 
-            value={searchQuery}
-            onChange={setSearchQuery}
-            placeholder="Rechercher dans les favoris..."
-          />
-        </div>
-        
-        {/* Filtres de catégories - Desktop */}
-        <div className="hidden md:block">
-          <CategoryFilter 
-            categories={categories}
-            activeCategory={activeCategory}
-            onCategoryChange={handleCategoryChange}
-          />
-        </div>
+      {/* Header Mobile */}
+      <div className="md:hidden bg-white shadow-md sticky top-0 z-10">
+        <div className="px-4 py-4">
+          {/* Titre stylisé mobile */}
+          <div className="flex items-center justify-center gap-2 mb-4">
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              viewBox="0 0 32 32"
+              className="w-8 h-8"
+            >
+              <defs>
+                <linearGradient id="globeGradientMobile" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style={{stopColor:'#3b82f6',stopOpacity:1}} />
+                  <stop offset="100%" style={{stopColor:'#1e40af',stopOpacity:1}} />
+                </linearGradient>
+              </defs>
+              <circle cx="16" cy="16" r="14" fill="url(#globeGradientMobile)" opacity="0.1"/>
+              <circle cx="16" cy="16" r="14" fill="none" stroke="url(#globeGradientMobile)" strokeWidth="2"/>
+              <ellipse cx="16" cy="16" rx="6" ry="14" fill="none" stroke="#60a5fa" strokeWidth="1.5" opacity="0.8"/>
+              <ellipse cx="16" cy="16" rx="11" ry="14" fill="none" stroke="#3b82f6" strokeWidth="1" opacity="0.6"/>
+              <ellipse cx="16" cy="16" rx="14" ry="5" fill="none" stroke="#60a5fa" strokeWidth="1.5" opacity="0.8"/>
+              <line x1="2" y1="16" x2="30" y2="16" stroke="#2563eb" strokeWidth="1.5" opacity="0.9"/>
+              <ellipse cx="16" cy="16" rx="12" ry="10" fill="none" stroke="#3b82f6" strokeWidth="1" opacity="0.6"/>
+            </svg>
+            <div>
+              <h1 className="text-2xl font-black bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent">
+                favoris
+                <span className="text-gray-700 font-bold">.pro</span>
+              </h1>
+              <p className="text-xs text-gray-500 text-center -mt-1">Paris sportifs</p>
+            </div>
+          </div>
 
-        {/* Menu déroulant pour mobile */}
-        <div className="md:hidden mb-6">
+          {/* Menu déroulant pour mobile */}
           <div className="relative">
             <button
               onClick={() => setShowMobileCategories(!showMobileCategories)}
-              className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg shadow-sm text-left flex justify-between items-center"
+              className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-left flex justify-between items-center"
             >
-              <span className="font-medium">
+              <span className="font-medium text-gray-700">
                 {activeCategory || 'Toutes les catégories'}
               </span>
               <svg 
-                className={`w-5 h-5 transition-transform ${showMobileCategories ? 'rotate-180' : ''}`} 
+                className={`w-5 h-5 transition-transform text-gray-500 ${showMobileCategories ? 'rotate-180' : ''}`} 
                 fill="none" 
                 stroke="currentColor" 
                 viewBox="0 0 24 24"
@@ -178,11 +195,11 @@ export default function Home() {
             </button>
             
             {showMobileCategories && (
-              <div className="absolute z-10 w-full mt-2 bg-white border border-gray-300 rounded-lg shadow-lg">
+              <div className="absolute z-10 w-full mt-2 bg-white border border-gray-200 rounded-lg shadow-lg">
                 <button
                   onClick={() => handleCategoryChange('')}
                   className={`w-full px-4 py-3 text-left hover:bg-gray-50 ${
-                    activeCategory === '' ? 'bg-blue-50 text-blue-600 font-medium' : ''
+                    activeCategory === '' ? 'bg-blue-50 text-blue-600 font-medium' : 'text-gray-700'
                   }`}
                 >
                   Toutes les catégories
@@ -192,7 +209,7 @@ export default function Home() {
                     key={category}
                     onClick={() => handleCategoryChange(category)}
                     className={`w-full px-4 py-3 text-left hover:bg-gray-50 border-t border-gray-100 ${
-                      activeCategory === category ? 'bg-blue-50 text-blue-600 font-medium' : ''
+                      activeCategory === category ? 'bg-blue-50 text-blue-600 font-medium' : 'text-gray-700'
                     }`}
                   >
                     {category}
@@ -202,7 +219,10 @@ export default function Home() {
             )}
           </div>
         </div>
+      </div>
 
+      {/* Contenu principal */}
+      <div className="container mx-auto px-4 py-8">
         {searchQuery && (
           <div className="mb-4">
             <p className="text-sm text-gray-600">
