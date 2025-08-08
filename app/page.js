@@ -85,60 +85,67 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header Desktop avec bande de fond */}
-      <div className="hidden md:block bg-gray-100 border-b border-gray-200">
-        <div className="container mx-auto px-4 py-4">
-          {/* Lien Admin en haut à droite */}
-          <div className="flex justify-end mb-2">
+      <div className="hidden md:block bg-blue-50 border-b border-blue-100 sticky top-0 z-10 shadow-sm">
+        <div className="container mx-auto px-4 py-2">
+          {/* Titre centré avec logo et Admin */}
+          <div className="flex items-center justify-between">
+            {/* Espace vide à gauche pour équilibrer */}
+            <div className="w-20"></div>
+            
+            {/* Logo et titre au centre */}
+            <div className="flex items-center justify-center gap-3">
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                viewBox="0 0 32 32"
+                className="w-8 h-8"
+              >
+                <defs>
+                  <linearGradient id="globeGradientDesktop" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style={{stopColor:'#3b82f6',stopOpacity:1}} />
+                    <stop offset="100%" style={{stopColor:'#1e40af',stopOpacity:1}} />
+                  </linearGradient>
+                </defs>
+                <circle cx="16" cy="16" r="14" fill="url(#globeGradientDesktop)" opacity="0.1"/>
+                <circle cx="16" cy="16" r="14" fill="none" stroke="url(#globeGradientDesktop)" strokeWidth="2"/>
+                <ellipse cx="16" cy="16" rx="6" ry="14" fill="none" stroke="#60a5fa" strokeWidth="1.5" opacity="0.8"/>
+                <ellipse cx="16" cy="16" rx="11" ry="14" fill="none" stroke="#3b82f6" strokeWidth="1" opacity="0.6"/>
+                <ellipse cx="16" cy="16" rx="14" ry="5" fill="none" stroke="#60a5fa" strokeWidth="1.5" opacity="0.8"/>
+                <line x1="2" y1="16" x2="30" y2="16" stroke="#2563eb" strokeWidth="1.5" opacity="0.9"/>
+                <ellipse cx="16" cy="16" rx="12" ry="10" fill="none" stroke="#3b82f6" strokeWidth="1" opacity="0.6"/>
+              </svg>
+              <h1 className="text-2xl font-bold text-gray-800">
+                favoris.pro : Les meilleurs sites pour vos paris sportifs
+              </h1>
+            </div>
+            
+            {/* Lien Admin à droite */}
             <Link
               href="/admin"
-              className="text-sm text-gray-600 hover:text-gray-800 transition-colors"
+              className="text-sm text-blue-600 hover:text-blue-800 transition-colors w-20 text-right"
             >
               Admin
             </Link>
           </div>
           
-          {/* Titre centré avec logo */}
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              viewBox="0 0 32 32"
-              className="w-10 h-10"
-            >
-              <defs>
-                <linearGradient id="globeGradientDesktop" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" style={{stopColor:'#3b82f6',stopOpacity:1}} />
-                  <stop offset="100%" style={{stopColor:'#1e40af',stopOpacity:1}} />
-                </linearGradient>
-              </defs>
-              <circle cx="16" cy="16" r="14" fill="url(#globeGradientDesktop)" opacity="0.1"/>
-              <circle cx="16" cy="16" r="14" fill="none" stroke="url(#globeGradientDesktop)" strokeWidth="2"/>
-              <ellipse cx="16" cy="16" rx="6" ry="14" fill="none" stroke="#60a5fa" strokeWidth="1.5" opacity="0.8"/>
-              <ellipse cx="16" cy="16" rx="11" ry="14" fill="none" stroke="#3b82f6" strokeWidth="1" opacity="0.6"/>
-              <ellipse cx="16" cy="16" rx="14" ry="5" fill="none" stroke="#60a5fa" strokeWidth="1.5" opacity="0.8"/>
-              <line x1="2" y1="16" x2="30" y2="16" stroke="#2563eb" strokeWidth="1.5" opacity="0.9"/>
-              <ellipse cx="16" cy="16" rx="12" ry="10" fill="none" stroke="#3b82f6" strokeWidth="1" opacity="0.6"/>
-            </svg>
-            <h1 className="text-3xl font-bold text-gray-800">
-              favoris.pro : Les meilleurs sites pour vos paris sportifs
-            </h1>
-          </div>
-          
-          {/* Barre de recherche */}
-          <div className="max-w-xl mx-auto mb-4">
-            <SearchBar 
-              value={searchQuery}
-              onChange={setSearchQuery}
-              placeholder="Rechercher dans les favoris..."
-            />
-          </div>
-          
-          {/* Catégories */}
-          <div className="flex justify-center">
-            <CategoryFilter 
-              categories={categories}
-              activeCategory={activeCategory}
-              onCategoryChange={handleCategoryChange}
-            />
+          {/* Barre de recherche et catégories sur la même ligne */}
+          <div className="flex items-center gap-4 py-2">
+            {/* Barre de recherche */}
+            <div className="flex-1 max-w-md">
+              <SearchBar 
+                value={searchQuery}
+                onChange={setSearchQuery}
+                placeholder="Rechercher dans les favoris..."
+              />
+            </div>
+            
+            {/* Catégories */}
+            <div className="flex-1">
+              <CategoryFilter 
+                categories={categories}
+                activeCategory={activeCategory}
+                onCategoryChange={handleCategoryChange}
+              />
+            </div>
           </div>
         </div>
       </div>
