@@ -297,7 +297,18 @@ export default function Home() {
 
         {orderedCategories.map((category) => (
           <div key={category} className="mb-8">
-            <h2 className="text-2xl font-semibold mb-4 text-gray-800">{category}</h2>
+            {/* Titre de catégorie avec design amélioré sur desktop */}
+            <div className="mb-6">
+              <h2 className="text-2xl font-semibold text-gray-800 md:text-center md:relative md:py-4">
+                <span className="md:relative md:z-10 md:bg-gray-50 md:px-8 md:inline-block">
+                  {category}
+                </span>
+                {/* Ligne décorative derrière le titre sur desktop */}
+                <span className="hidden md:block md:absolute md:inset-0 md:flex md:items-center">
+                  <span className="md:w-full md:h-px md:bg-gradient-to-r md:from-transparent md:via-blue-200 md:to-transparent"></span>
+                </span>
+              </h2>
+            </div>
             
             {/* Vue Cartes - MODIFIÉ POUR 4 COLONNES */}
             {viewMode === 'cards' && (
