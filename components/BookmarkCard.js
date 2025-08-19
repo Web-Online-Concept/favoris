@@ -29,11 +29,11 @@ export default function BookmarkCard({ bookmark, isAdmin, onEdit, onDelete }) {
           }}
         />
         <div className="flex-1">
-          <h3 className="font-semibold text-base text-blue-600">
+          <h3 className="font-semibold text-base text-blue-600 truncate">
             {bookmark.title}
           </h3>
           {bookmark.description && (
-            <p className="text-gray-600 text-xs mt-1 line-clamp-2">{bookmark.description}</p>
+            <p className="text-gray-600 text-xs mt-1 truncate">{bookmark.description}</p>
           )}
         </div>
         {isAdmin && (
