@@ -17,6 +17,14 @@ export default function Home() {
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(true);
   const [showMobileCategories, setShowMobileCategories] = useState(false);
+  const [collapsedCategories, setCollapsedCategories] = useState(() => {
+    // Charger l'état des catégories repliées depuis localStorage
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('collapsedCategories');
+      return saved ? JSON.parse(saved) : [];
+    }
+    return [];
+  });
   
   // État pour le mode d'affichage
   const [viewMode, setViewMode] = useState(() => {
@@ -104,6 +112,18 @@ export default function Home() {
   const handleViewModeChange = (mode) => {
     setViewMode(mode);
     localStorage.setItem('bookmarkViewMode', mode);
+  };
+
+  const toggleCategory = (category) => {
+    setCollapsedCategories(prev => {
+      const newCollapsed = prev.includes(category)
+        ? prev.filter(c => c !== category)
+        : [...prev, category];
+      
+      // Sauvegarder dans localStorage
+      localStorage.setItem('collapsedCategories', JSON.stringify(newCollapsed));
+      return newCollapsed;
+    });
   };
 
   if (loading) {
@@ -297,56 +317,76 @@ export default function Home() {
 
         {orderedCategories.map((category) => (
           <div key={category} className="mb-8">
-            {/* Titre de catégorie avec bande design alignée sur desktop */}
+            {/* Titre de catégorie cliquable avec bande design sur desktop */}
             <div className="mb-6">
-              <div className="md:bg-gradient-to-r md:from-blue-600 md:via-blue-500 md:to-indigo-600 md:p-4 md:rounded-xl md:shadow-lg md:relative md:overflow-hidden">
+              <button
+                onClick={() => toggleCategory(category)}
+                className="w-full md:bg-gradient-to-r md:from-blue-600 md:via-blue-500 md:to-indigo-600 md:p-4 md:rounded-xl md:shadow-lg md:relative md:overflow-hidden group hover:md:shadow-xl transition-shadow text-left"
+              >
                 {/* Effet de brillance */}
                 <div className="hidden md:block md:absolute md:inset-0 md:bg-gradient-to-r md:from-transparent md:via-white md:to-transparent md:opacity-10 md:-skew-x-12"></div>
                 {/* Motif décoratif */}
                 <div className="hidden md:block md:absolute md:top-0 md:right-0 md:w-32 md:h-32 md:bg-white md:opacity-5 md:rounded-full md:-mr-16 md:-mt-16"></div>
                 <div className="hidden md:block md:absolute md:bottom-0 md:left-0 md:w-24 md:h-24 md:bg-white md:opacity-5 md:rounded-full md:-ml-12 md:-mb-12"></div>
-                <h2 className="text-2xl font-bold text-gray-800 md:text-white md:text-center md:relative md:z-10">
-                  {category}
-                </h2>
-              </div>
+                <div className="flex items-center justify-between md:justify-center md:relative md:z-10">
+                  <h2 className="text-2xl font-bold text-gray-800 md:text-white">
+                    {category}
+                  </h2>
+                  <svg 
+                    className={`w-6 h-6 text-gray-600 md:text-white md:absolute md:right-4 transition-transform ${
+                      collapsedCategories.includes(category) ? '' : 'rotate-180'
+                    }`}
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
+              </button>
             </div>
             
-            {/* Vue Cartes - MODIFIÉ POUR 4 COLONNES */}
-            {viewMode === 'cards' && (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                {groupedBookmarks[category].map((bookmark) => (
-                  <BookmarkCard 
-                    key={bookmark.id} 
-                    bookmark={bookmark}
-                    isAdmin={false}
-                  />
-                ))}
-              </div>
-            )}
-            
-            {/* Vue Liste */}
-            {viewMode === 'list' && (
-              <div className="bg-white rounded-lg shadow-md divide-y divide-gray-100">
-                {groupedBookmarks[category].map((bookmark) => (
-                  <BookmarkList 
-                    key={bookmark.id} 
-                    bookmark={bookmark}
-                  />
-                ))}
-              </div>
-            )}
-            
-            {/* Vue Icônes */}
-            {viewMode === 'icons' && (
-              <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-2">
-                {groupedBookmarks[category].map((bookmark) => (
-                  <BookmarkIcon 
-                    key={bookmark.id} 
-                    bookmark={bookmark}
-                  />
-                ))}
-              </div>
-            )}
+            {/* Contenu avec animation de repli/dépli */}
+            <div className={`transition-all duration-300 ease-in-out overflow-hidden ${
+              collapsedCategories.includes(category) ? 'max-h-0' : 'max-h-[5000px]'
+            }`}>
+              {/* Vue Cartes - MODIFIÉ POUR 4 COLONNES */}
+              {viewMode === 'cards' && (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                  {groupedBookmarks[category].map((bookmark) => (
+                    <BookmarkCard 
+                      key={bookmark.id} 
+                      bookmark={bookmark}
+                      isAdmin={false}
+                    />
+                  ))}
+                </div>
+              )}
+              
+              {/* Vue Liste */}
+              {viewMode === 'list' && (
+                <div className="bg-white rounded-lg shadow-md divide-y divide-gray-100">
+                  {groupedBookmarks[category].map((bookmark) => (
+                    <BookmarkList 
+                      key={bookmark.id} 
+                      bookmark={bookmark}
+                    />
+                  ))}
+                </div>
+              )}
+              
+              {/* Vue Icônes */}
+              {viewMode === 'icons' && (
+                <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-2">
+                  {groupedBookmarks[category].map((bookmark) => (
+                    <BookmarkIcon 
+                      key={bookmark.id} 
+                      bookmark={bookmark}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         ))}
 
