@@ -15,7 +15,7 @@ export default function BookmarkCard({ bookmark, isAdmin, onEdit, onDelete }) {
 
   return (
     <div 
-      className={`bg-white rounded-lg shadow-md p-3 hover:shadow-lg transition-shadow ${!isAdmin ? 'cursor-pointer' : ''}`}
+      className={`bg-white rounded-lg shadow-md p-3 hover:shadow-xl hover:scale-105 transition-all duration-200 ${!isAdmin ? 'cursor-pointer' : ''}`}
       onClick={handleCardClick}
     >
       <div className="flex items-start gap-2">
