@@ -321,7 +321,7 @@ export default function Home() {
             <div className="mb-6">
               <button
                 onClick={() => toggleCategory(category)}
-                className="w-full md:bg-gradient-to-r md:from-blue-600 md:via-blue-500 md:to-indigo-600 md:p-4 md:rounded-xl md:shadow-lg md:relative md:overflow-hidden group hover:md:shadow-xl transition-shadow text-left"
+                className="w-full md:bg-gradient-to-r md:from-blue-600 md:via-blue-500 md:to-indigo-600 md:p-4 md:rounded-xl md:shadow-lg md:relative md:overflow-hidden group hover:md:shadow-xl transition-all text-left cursor-pointer hover:md:scale-[1.02]"
               >
                 {/* Effet de brillance */}
                 <div className="hidden md:block md:absolute md:inset-0 md:bg-gradient-to-r md:from-transparent md:via-white md:to-transparent md:opacity-10 md:-skew-x-12"></div>
