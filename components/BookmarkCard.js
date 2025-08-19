@@ -28,7 +28,7 @@ export default function BookmarkCard({ bookmark, isAdmin, onEdit, onDelete }) {
             e.target.src = '/default-favicon.png';
           }}
         />
-        <div className="flex-1">
+        <div className="flex-1 min-w-0">
           <h3 className="font-semibold text-base text-blue-600 overflow-hidden text-ellipsis whitespace-nowrap">
             {bookmark.title}
           </h3>
