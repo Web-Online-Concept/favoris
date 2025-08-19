@@ -297,10 +297,15 @@ export default function Home() {
 
         {orderedCategories.map((category) => (
           <div key={category} className="mb-8">
-            {/* Titre de catégorie avec bande bleue design sur desktop */}
-            <div className="mb-6 md:-mx-4 lg:-mx-8">
-              <div className="md:bg-gradient-to-r md:from-blue-500 md:via-blue-600 md:to-blue-500 md:py-3 md:shadow-sm">
-                <h2 className="text-2xl font-semibold text-gray-800 md:text-white md:text-center px-4">
+            {/* Titre de catégorie avec bande design améliorée sur desktop */}
+            <div className="mb-6 md:px-4">
+              <div className="md:bg-gradient-to-r md:from-blue-600 md:via-blue-500 md:to-indigo-600 md:p-4 md:rounded-xl md:shadow-lg md:relative md:overflow-hidden">
+                {/* Effet de brillance */}
+                <div className="hidden md:block md:absolute md:inset-0 md:bg-gradient-to-r md:from-transparent md:via-white md:to-transparent md:opacity-10 md:-skew-x-12"></div>
+                {/* Motif décoratif */}
+                <div className="hidden md:block md:absolute md:top-0 md:right-0 md:w-32 md:h-32 md:bg-white md:opacity-5 md:rounded-full md:-mr-16 md:-mt-16"></div>
+                <div className="hidden md:block md:absolute md:bottom-0 md:left-0 md:w-24 md:h-24 md:bg-white md:opacity-5 md:rounded-full md:-ml-12 md:-mb-12"></div>
+                <h2 className="text-2xl font-bold text-gray-800 md:text-white md:text-center md:relative md:z-10 px-4 md:px-0">
                   {category}
                 </h2>
               </div>
