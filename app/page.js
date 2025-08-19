@@ -120,7 +120,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header Desktop avec bande de fond */}
-      <div className="hidden md:block bg-blue-50 border-b border-blue-100 sticky top-0 z-10 shadow-sm">
+      <div className="hidden md:block bg-blue-50 border-b border-blue-100 sticky top-0 z-50 shadow-sm">
         <div className="container mx-auto px-4 py-3">
           {/* Flex avec colonnes fixes */}
           <div className="flex items-center justify-between mb-2">
@@ -204,7 +204,7 @@ export default function Home() {
       </div>
 
       {/* Header Mobile */}
-      <div className="md:hidden bg-white shadow-md sticky top-0 z-10">
+      <div className="md:hidden bg-white shadow-md sticky top-0 z-50">
         <div className="px-4 py-4">
           {/* Titre stylisé mobile */}
           <div className="flex items-center justify-between mb-4">
@@ -297,17 +297,13 @@ export default function Home() {
 
         {orderedCategories.map((category) => (
           <div key={category} className="mb-8">
-            {/* Titre de catégorie avec design amélioré sur desktop */}
-            <div className="mb-6">
-              <h2 className="text-2xl font-semibold text-gray-800 md:text-center md:relative md:py-4">
-                <span className="md:relative md:z-10 md:bg-gray-50 md:px-8 md:inline-block">
+            {/* Titre de catégorie avec bande bleue design sur desktop */}
+            <div className="mb-6 md:-mx-4 lg:-mx-8">
+              <div className="md:bg-gradient-to-r md:from-blue-500 md:via-blue-600 md:to-blue-500 md:py-3 md:shadow-sm">
+                <h2 className="text-2xl font-semibold text-gray-800 md:text-white md:text-center px-4">
                   {category}
-                </span>
-                {/* Ligne décorative derrière le titre sur desktop */}
-                <span className="hidden md:block md:absolute md:inset-0 md:flex md:items-center">
-                  <span className="md:w-full md:h-px md:bg-gradient-to-r md:from-transparent md:via-blue-200 md:to-transparent"></span>
-                </span>
-              </h2>
+                </h2>
+              </div>
             </div>
             
             {/* Vue Cartes - MODIFIÉ POUR 4 COLONNES */}
