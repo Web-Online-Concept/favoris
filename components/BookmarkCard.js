@@ -35,9 +35,6 @@ export default function BookmarkCard({ bookmark, isAdmin, onEdit, onDelete }) {
           {bookmark.description && (
             <p className="text-gray-600 text-sm mt-1">{bookmark.description}</p>
           )}
-          <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-xs text-gray-700 mt-2">
-            {bookmark.category}
-          </span>
         </div>
         {isAdmin && (
           <div className="flex gap-2">
