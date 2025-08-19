@@ -350,42 +350,44 @@ export default function Home() {
             <div className={`transition-all duration-300 ease-in-out overflow-hidden ${
               collapsedCategories.includes(category) ? 'max-h-0' : 'max-h-[5000px]'
             }`}>
-              {/* Vue Cartes - MODIFIÉ POUR 4 COLONNES */}
-              {viewMode === 'cards' && (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                  {groupedBookmarks[category].map((bookmark) => (
-                    <BookmarkCard 
-                      key={bookmark.id} 
-                      bookmark={bookmark}
-                      isAdmin={false}
-                    />
-                  ))}
-                </div>
-              )}
-              
-              {/* Vue Liste */}
-              {viewMode === 'list' && (
-                <div className="bg-white rounded-lg shadow-md divide-y divide-gray-100">
-                  {groupedBookmarks[category].map((bookmark) => (
-                    <BookmarkList 
-                      key={bookmark.id} 
-                      bookmark={bookmark}
-                    />
-                  ))}
-                </div>
-              )}
-              
-              {/* Vue Icônes */}
-              {viewMode === 'icons' && (
-                <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-2">
-                  {groupedBookmarks[category].map((bookmark) => (
-                    <BookmarkIcon 
-                      key={bookmark.id} 
-                      bookmark={bookmark}
-                    />
-                  ))}
-                </div>
-              )}
+              <div className="pb-4">
+                {/* Vue Cartes - MODIFIÉ POUR 4 COLONNES */}
+                {viewMode === 'cards' && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    {groupedBookmarks[category].map((bookmark) => (
+                      <BookmarkCard 
+                        key={bookmark.id} 
+                        bookmark={bookmark}
+                        isAdmin={false}
+                      />
+                    ))}
+                  </div>
+                )}
+                
+                {/* Vue Liste */}
+                {viewMode === 'list' && (
+                  <div className="bg-white rounded-lg shadow-md divide-y divide-gray-100">
+                    {groupedBookmarks[category].map((bookmark) => (
+                      <BookmarkList 
+                        key={bookmark.id} 
+                        bookmark={bookmark}
+                      />
+                    ))}
+                  </div>
+                )}
+                
+                {/* Vue Icônes */}
+                {viewMode === 'icons' && (
+                  <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-2">
+                    {groupedBookmarks[category].map((bookmark) => (
+                      <BookmarkIcon 
+                        key={bookmark.id} 
+                        bookmark={bookmark}
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         ))}
