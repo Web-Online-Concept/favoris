@@ -299,9 +299,9 @@ export default function Home() {
           <div key={category} className="mb-8">
             <h2 className="text-2xl font-semibold mb-4 text-gray-800">{category}</h2>
             
-            {/* Vue Cartes */}
+            {/* Vue Cartes - MODIFIÉ POUR 4 COLONNES */}
             {viewMode === 'cards' && (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 {groupedBookmarks[category].map((bookmark) => (
                   <BookmarkCard 
                     key={bookmark.id} 
